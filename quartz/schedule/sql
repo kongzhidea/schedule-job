@@ -1,0 +1,15 @@
+CREATE TABLE `user` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(64) CHARACTER SET utf8 NOT NULL DEFAULT '',
+  `password` varchar(64) CHARACTER SET utf8 DEFAULT '',
+  `realname` varchar(64) CHARACTER SET utf8 DEFAULT '',
+  `uptime` datetime DEFAULT NULL,
+  `mobile` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `mail` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+INSERT INTO `user` (`id`, `username`, `password`, `realname`, `uptime`, `mobile`, `status`, `mail`) VALUES (1, 'abc', '202cb962ac59075b964b07152d234b70', 'kk', '2016-07-14 19:28:04', '12345678901', 0, 'abc@qq.com');
+
+-- user表 密码为，123
