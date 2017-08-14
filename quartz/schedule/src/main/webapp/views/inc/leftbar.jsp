@@ -8,7 +8,7 @@
     <nav>
         <ul class="sb-menu">
             <li class="sb-toggle-left"><h3>管理后台</h3></li>
-            <li><a href="/config/list">配置列表</a></li>
+            <li><a href="/job/list">任务列表</a></li>
             <li><a href="/admin/list">员工列表</a></li>
             <li><a href="/login/logout" data-method="delete" rel="nofollow">注销</a></li>
             <li><a href="/admin/setting">编辑账户信息</a></li>
