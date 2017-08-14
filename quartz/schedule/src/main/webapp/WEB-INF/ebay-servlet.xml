@@ -32,7 +32,7 @@
         </property>
         <property name="customArgumentResolvers">
             <list>
-                <bean class="com.kdiamond.resolver.UserArgumentResolver"/>
+                <bean class="com.schedule.resolver.UserArgumentResolver"/>
             </list>
         </property>
     </bean>

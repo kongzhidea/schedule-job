@@ -69,4 +69,6 @@
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
+
+    <import resource="quartz_ram.xml"/>
 </beans>
