@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.schedule.dao.JobScheduleDao">
+
+    <sql id="Columns">
+        id,job_name,job_group,status,description,schedule_time,update_user_id,update_user_name,addtime,uptime
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="JobSchedule">
+        select
+        <include refid="Columns"/>
+        from job_schedule where id = #{id}
+    </select>
+
+    <select id="search" resultType="JobSchedule">
+        select
+        <include refid="Columns"/>
+        from job_schedule where 1=1
+        <if test="param.id != '' and param.id != null">
+            and id = #{param.id}
+        </if>
+        <if test="param.jobName != '' and param.jobName != null">
+            and job_name = #{param.jobName}
+        </if>
+        <if test="param.jobGroup != '' and param.jobGroup != null">
+            and job_group  = #{param.jobGroup}
+        </if>
+        <if test="param.status != '' and param.status != null">
+            and status = #{param.status}
+        </if>
+        <if test="param.updateUserId != '' and param.updateUserId != null">
+            and update_user_id = #{param.updateUserId}
+        </if>
+        order by id desc limit #{start},#{limit}
+    </select>
+
+    <select id="count" resultType="int">
+        select
+        count(id)
+        from job_schedule where 1=1
+        <if test="param.id != '' and param.id != null">
+            and id = #{param.id}
+        </if>
+        <if test="param.jobName != '' and param.jobName != null">
+            and job_name = #{param.jobName}
+        </if>
+        <if test="param.jobGroup != '' and param.jobGroup != null">
+            and job_group  = #{param.jobGroup}
+        </if>
+        <if test="param.status != '' and param.status != null">
+            and status = #{param.status}
+        </if>
+        <if test="param.updateUserId != '' and param.updateUserId != null">
+            and update_user_id = #{param.updateUserId}
+        </if>
+    </select>
+
+
+    <insert id="insert" parameterType="JobSchedule" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        job_schedule( job_name, job_group, status, description, schedule_time, update_user_id, update_user_name, addtime, uptime)
+        values(#{jobName},#{jobGroup},#{status},#{description},#{scheduleTime},#{updateUserId},#{updateUserName},#{addtime},#{uptime})
+    </insert>
+
+    <update id="updateById" parameterType="JobSchedule">
+        update job_schedule set
+        job_name=#{jobName},job_group=#{jobGroup},status=#{status},description=#{description},schedule_time=#{scheduleTime},update_user_id=#{updateUserId},update_user_name=#{updateUserName},addtime=#{addtime},uptime=#{uptime}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteById" parameterType="long">
+        delete from job_schedule where
+        id=#{id}
+    </delete>
+
+</mapper>

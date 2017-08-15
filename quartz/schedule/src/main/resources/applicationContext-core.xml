@@ -12,8 +12,9 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!-- 读取properties文件 -->
-    <context:property-placeholder location="classpath:*.properties"/>
+    <!-- 读取properties文件，仅仅设置了 web.properties -->
+    <context:property-placeholder location="classpath:web.properties"/>
+
     <!-- jdbc 数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
           destroy-method="close">
@@ -70,5 +71,9 @@
     </bean>
 
 
-    <import resource="quartz_ram.xml"/>
+    <!-- 内存运行，如果多台机器则需要根据redis来判断单点运行 -->
+    <!--<import resource="quartz_ram.xml"/>-->
+
+    <!-- 集成mysql，多台机器时候，任务单点运行 -->
+    <!--<import resource="quartz_mysql.xml"/>-->
 </beans>
