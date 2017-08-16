@@ -3,9 +3,12 @@ package com.schedule.controller;
 import com.alibaba.fastjson.JSON;
 import com.schedule.annotation.Authorization;
 import com.schedule.conste.JobStatusEnum;
+import com.schedule.model.JobHistory;
 import com.schedule.model.JobSchedule;
 import com.schedule.model.User;
+import com.schedule.param.JobHistoryParam;
 import com.schedule.param.JobScheduleParam;
+import com.schedule.service.JobHistoryService;
 import com.schedule.service.JobScheduleService;
 import com.schedule.utils.JsonUtil;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +39,8 @@ public class JobScheduleController {
     @Autowired
     JobScheduleService jobScheduleService;
 
+    @Autowired
+    JobHistoryService jobHistoryService;
 
     // 任务列表
     @RequestMapping("list")
@@ -64,6 +69,35 @@ public class JobScheduleController {
         model.addAttribute("totalPage", totalPage);
 
         return "job/list";
+    }
+
+    // 任务执行历史列表
+    @RequestMapping("history/list")
+    public String list_history(User user,
+                       JobHistoryParam param,
+                       @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+                       @RequestParam(value = "limit", required = false, defaultValue = "20") Integer limit,
+                       HttpServletRequest request,
+                       HttpServletResponse response, Model model) {
+        page = (page == null || page <= 0) ? 1 : page;
+        limit = (limit == null || limit <= 0) ? 20 : limit;
+
+        int start = (page - 1) * limit;
+        List<JobHistory> list = jobHistoryService.search(param, start, limit);
+        int count = jobHistoryService.count(param);
+
+        model.addAttribute("list", list);
+        model.addAttribute("count", count);
+
+        model.addAttribute("param", param);
+        model.addAttribute("page", page);
+        model.addAttribute("limit", limit);
+        model.addAttribute("start", start);
+
+        int totalPage = (count + limit - 1) / limit;
+        model.addAttribute("totalPage", totalPage);
+
+        return "job/history/list";
     }
 
     // view

@@ -88,6 +88,7 @@
                         <td>${item.updateUserName}</td>
                         <td><fmt:formatDate value="${item.uptime}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>
                         <td>
+                            <a href="/job/history/list?jobName=${item.jobName}" >查看历史任务</a>
                             <a href="view?id=${item.id}" target="_blank">编辑</a>
 
                             <a href="javascript:void(0);" class="delete"
