@@ -78,6 +78,12 @@
                         </div>
                     </div>
                     <div class="control-group">
+                        <label class="control-label" for="mail">运行参数</label>
+                        <div class="controls">
+                            <input class="string required " id="arguments"  size="50" type="text" value="${job.arguments}" />
+                        </div>
+                    </div>
+                    <div class="control-group">
                         <label class="control-label" for="mail">调度表达式</label>
                         <div class="controls">
                             <input class="string required " id="scheduleTime"  size="50" type="text" value="${job.scheduleTime}" />

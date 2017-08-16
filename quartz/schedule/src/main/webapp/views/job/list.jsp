@@ -71,6 +71,8 @@
                     <th>状态</th>
                     <th>表达式</th>
                     <th>描述</th>
+                    <th>运行参数</th>
+                    <th>下次执行时间</th>
                     <th>维护人</th>
                     <th>更新时间</th>
                     <th>操作</th>
@@ -85,18 +87,29 @@
                         <td>${item.statusDesc}</td>
                         <td>${item.scheduleTime}</td>
                         <td>${item.description}</td>
+                        <td>${item.arguments}</td>
+                        <td><fmt:formatDate value="${item.nextFireTime}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>
                         <td>${item.updateUserName}</td>
                         <td><fmt:formatDate value="${item.uptime}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>
                         <td>
-                            <a href="/job/history/list?jobName=${item.jobName}" >查看历史任务</a>
+                            <a href="javascript:void(0);" class="btn runOneTime" id = "_runOneTime_${item.id}"
+                                                               data-id="${item.id}" data-name="${item.jobName}">执行一次</a>
+
+                            <a href="/job/history/list?jobName=${item.jobName}&jobGroup=${item.jobGroup}" target="_blank">执行记录</a>
+
                             <a href="view?id=${item.id}" target="_blank">编辑</a>
 
-                            <a href="javascript:void(0);" class="delete"
-                                   data-id="${item.id}" data-name="${item.jobName}">删除</a>
-                            <c:if test="${item.status == 0}">
-                                <a href="javascript:void(0);" class="delete"
-                                   data-id="${item.id}" data-name="${item.jobName}">删除</a>
+                            <c:if test="${item.status == 1}">
+                                <a href="javascript:void(0);" class="pause"
+                                   data-id="${item.id}" data-name="${item.jobName}">暂停</a>
                             </c:if>
+                            <c:if test="${item.status == 2}">
+                                <a href="javascript:void(0);" class="resume"
+                                   data-id="${item.id}" data-name="${item.jobName}">恢复</a>
+                            </c:if>
+
+                             <a href="javascript:void(0);" class="delete"
+                                                               data-id="${item.id}" data-name="${item.jobName}">删除</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -114,6 +127,7 @@
               var name = $(this).attr("data-name");
               bootbox.confirm("确认删除:" + name, function(result){
                   if(result){
+
                       $.ajax({
                           type: "post",
                           data: {"id":id},
@@ -133,6 +147,91 @@
                   }
               });
         });
+
+
+        $(".pause").click(function(){
+              var id = $(this).attr("data-id");
+              var name = $(this).attr("data-name");
+              bootbox.confirm("确认暂定任务:" + name, function(result){
+                  if(result){
+                      $.ajax({
+                          type: "post",
+                          data: {"id":id},
+                          url: "pause",
+                          success: function (ret) {
+                              if(ret.code != 0){
+                                  bootbox.alert(ret.msg);
+                              }else{
+                                  window.location.reload();
+                              }
+
+                          },
+                          error: function () {
+                              bootbox.alert("请求失败");
+                          }
+                      });
+                  }
+              });
+        });
+
+
+
+         $(".resume").click(function(){
+               var id = $(this).attr("data-id");
+               var name = $(this).attr("data-name");
+               bootbox.confirm("确认恢复任务:" + name, function(result){
+                   if(result){
+                       $.ajax({
+                           type: "post",
+                           data: {"id":id},
+                           url: "resume",
+                           success: function (ret) {
+                               if(ret.code != 0){
+                                   bootbox.alert(ret.msg);
+                               }else{
+                                   window.location.reload();
+                               }
+
+                           },
+                           error: function () {
+                               bootbox.alert("请求失败");
+                           }
+                       });
+                   }
+               });
+         });
+
+         $(".runOneTime").click(function(e){
+               if("disabled" == $(this).attr('disabled') || "true" == $(this).attr('disabled')){
+                    return;
+               }
+
+               var id = $(this).attr("data-id");
+               var name = $(this).attr("data-name");
+               bootbox.confirm("确认恢复任务:" + name, function(result){
+                   if(result){
+                       $("#_runOneTime_" + id).attr('disabled',"true");
+
+                       $.ajax({
+                           type: "post",
+                           data: {"id":id},
+                           url: "runOneTime",
+                           success: function (ret) {
+                               if(ret.code != 0){
+                                   bootbox.alert(ret.msg);
+                               }else{
+                                   bootbox.alert(name + " 运行成功");
+                                   $("#_runOneTime_" + id).removeAttr("disabled")
+                               }
+
+                           },
+                           error: function () {
+                               bootbox.alert("请求失败");
+                           }
+                       });
+                   }
+               });
+         });
     });
 </script>
 

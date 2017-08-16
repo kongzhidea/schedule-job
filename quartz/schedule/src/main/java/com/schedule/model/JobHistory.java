@@ -9,7 +9,8 @@ public class JobHistory {
     private String jobName;
     private String jobGroup;
     private int jobStatus; // JobHistoryStatusEnum
-    private String hostName;
+    private String hostName; // 执行机器 主机名
+    private String ip; // 执行机器 ip
     private Date startTime;
     private Date endTime;
     private int updateUserId;
@@ -94,5 +95,13 @@ public class JobHistory {
 
     public void setUpdateUserName(String updateUserName) {
         this.updateUserName = updateUserName;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }

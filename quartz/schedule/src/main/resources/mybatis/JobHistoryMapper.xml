@@ -4,7 +4,7 @@
 
 <mapper namespace="com.schedule.dao.JobHistoryDao">
     <sql id="Columns">
-        id,job_name,job_group,job_status,host_name,start_time,end_time,update_user_id,update_user_name
+        id,job_name,job_group,job_status,host_name,ip,start_time,end_time,update_user_id,update_user_name
     </sql>
 
     <select id="getById" parameterType="long" resultType="JobHistory">
@@ -19,6 +19,9 @@
         from job_history where 1=1
         <if test="param.jobName != '' and param.jobName != null">
             and job_name = #{param.jobName}
+        </if>
+        <if test="param.jobGroup != '' and param.jobGroup != null">
+            and job_group = #{param.jobGroup}
         </if>
         <if test="param.queryStartTime != '' and param.queryStartTime != null">
             and start_time  >= #{param.queryStartTime}
@@ -36,6 +39,9 @@
         <if test="param.jobName != '' and param.jobName != null">
             and job_name = #{param.jobName}
         </if>
+        <if test="param.jobGroup != '' and param.jobGroup != null">
+            and job_group = #{param.jobGroup}
+        </if>
         <if test="param.queryStartTime != '' and param.queryStartTime != null">
             and start_time  >= #{param.queryStartTime}
         </if>
@@ -46,13 +52,13 @@
 
     <insert id="insert" parameterType="JobHistory" useGeneratedKeys="true" keyProperty="id">
         insert into
-        job_history( job_name, job_group, job_status, host_name, start_time, end_time, update_user_id, update_user_name)
-        values(#{jobName},#{jobGroup},#{jobStatus},#{hostName},#{startTime},#{endTime},#{updateUserId},#{updateUserName})
+        job_history( job_name, job_group, job_status, host_name, ip, start_time, end_time, update_user_id, update_user_name)
+        values(#{jobName},#{jobGroup},#{jobStatus},#{hostName},#{ip},#{startTime},#{endTime},#{updateUserId},#{updateUserName})
     </insert>
 
     <update id="updateById" parameterType="JobHistory">
         update job_history set
-        job_name=#{jobName},job_group=#{jobGroup},job_status=#{jobStatus},host_name=#{hostName},start_time=#{startTime},end_time=#{endTime},update_user_id=#{updateUserId},update_user_name=#{updateUserName}
+        job_name=#{jobName},job_group=#{jobGroup},job_status=#{jobStatus},host_name=#{hostName},ip=#{ip},start_time=#{startTime},end_time=#{endTime},update_user_id=#{updateUserId},update_user_name=#{updateUserName}
         where id=#{id}
     </update>
 

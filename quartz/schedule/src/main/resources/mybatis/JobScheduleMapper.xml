@@ -5,7 +5,7 @@
 <mapper namespace="com.schedule.dao.JobScheduleDao">
 
     <sql id="Columns">
-        id,job_name,job_group,status,description,schedule_time,update_user_id,update_user_name,addtime,uptime
+        id,job_name,job_group,status,description,schedule_time,update_user_id,update_user_name,addtime,uptime,arguments
     </sql>
 
     <select id="getById" parameterType="long" resultType="JobSchedule">
@@ -60,13 +60,13 @@
 
     <insert id="insert" parameterType="JobSchedule" useGeneratedKeys="true" keyProperty="id">
         insert into
-        job_schedule( job_name, job_group, status, description, schedule_time, update_user_id, update_user_name, addtime, uptime)
-        values(#{jobName},#{jobGroup},#{status},#{description},#{scheduleTime},#{updateUserId},#{updateUserName},#{addtime},#{uptime})
+        job_schedule( job_name, job_group, status, description, schedule_time, update_user_id, update_user_name, addtime, uptime, arguments)
+        values(#{jobName},#{jobGroup},#{status},#{description},#{scheduleTime},#{updateUserId},#{updateUserName},#{addtime},#{uptime},#{arguments})
     </insert>
 
     <update id="updateById" parameterType="JobSchedule">
         update job_schedule set
-        job_name=#{jobName},job_group=#{jobGroup},status=#{status},description=#{description},schedule_time=#{scheduleTime},update_user_id=#{updateUserId},update_user_name=#{updateUserName},addtime=#{addtime},uptime=#{uptime}
+        job_name=#{jobName},job_group=#{jobGroup},status=#{status},description=#{description},schedule_time=#{scheduleTime},update_user_id=#{updateUserId},update_user_name=#{updateUserName},addtime=#{addtime},uptime=#{uptime},arguments=#{arguments}
         where id=#{id}
     </update>
 

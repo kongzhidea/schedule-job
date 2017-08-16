@@ -2,9 +2,12 @@ package com.schedule.model;
 
 import com.schedule.conste.JobStatusEnum;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class JobSchedule {
+public class JobSchedule implements Serializable {
+    private static final long serialVersionUID = -1l;
+
     private long id;
 
     private String jobName; // job名称，对应的任务类
@@ -20,6 +23,9 @@ public class JobSchedule {
     private Date addtime;
     private Date uptime;
 
+    private String arguments; // 运行参数
+
+    private Date nextFireTime; // 下一次执行时间，实时计算
 
     public String getStatusDesc() {
         JobStatusEnum e = JobStatusEnum.getJobStatusEnumByStatus(status);
@@ -107,5 +113,21 @@ public class JobSchedule {
 
     public void setUptime(Date uptime) {
         this.uptime = uptime;
+    }
+
+    public Date getNextFireTime() {
+        return nextFireTime;
+    }
+
+    public void setNextFireTime(Date nextFireTime) {
+        this.nextFireTime = nextFireTime;
+    }
+
+    public String getArguments() {
+        return arguments;
+    }
+
+    public void setArguments(String arguments) {
+        this.arguments = arguments;
     }
 }

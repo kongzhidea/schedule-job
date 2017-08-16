@@ -37,6 +37,9 @@
                              任务名: <input class="control"  name="jobName" type="text" value="${param.jobName}" />
                         </label>
                         <label class="mgl50">
+                             任务组: <input class="control"  style="width:60px;" name="jobGroup" type="text" value="${param.jobGroup}" />
+                        </label>
+                        <label class="mgl50">
                              开始时间起: <input class="control Wdate"  name="queryStartTime"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',startDate: '%y-%M-%d 00:00:00'})" value="${param.queryStartTime}" />
                         </label>
                         <label class="mgl50">
@@ -57,7 +60,8 @@
                     <th>状态</th>
                     <th>开始时间</th>
                     <th>结束时间</th>
-                    <th>执行主机</th>
+                    <th>执行主机名</th>
+                    <th>执行主机IP</th>
                     <th>维护人</th>
                 </tr>
                 </thead>
@@ -65,12 +69,13 @@
                 <c:forEach items="${list}" var="item">
                     <tr>
                         <td>${item.id}</td>
-                        <td><a href="/job/list?jobName=${item.jobName}" >${item.jobName}</a></td>
+                        <td><a href="/job/list?jobName=${item.jobName}" target="_blank">${item.jobName}</a></td>
                         <td>${item.jobGroup}</td>
                         <td>${item.jobStatusDesc}</td>
                          <td><fmt:formatDate value="${item.startTime}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>
                           <td><fmt:formatDate value="${item.endTime}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>
                         <td>${item.hostName}</td>
+                        <td>${item.ip}</td>
                         <td>${item.updateUserName}</td>
                     </tr>
                 </c:forEach>

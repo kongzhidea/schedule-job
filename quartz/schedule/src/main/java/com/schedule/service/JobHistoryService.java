@@ -25,7 +25,7 @@ public class JobHistoryService {
         jobHistoryDao.insert(jobHistory);
     }
 
-    public void updateById(JobHistory jobHistory) {
+    public void updateJobHistoryById(JobHistory jobHistory) {
         jobHistoryDao.updateById(jobHistory);
     }
 
