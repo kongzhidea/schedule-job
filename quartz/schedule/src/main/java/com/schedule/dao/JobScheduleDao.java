@@ -20,4 +20,6 @@ public interface JobScheduleDao {
     List<JobSchedule> search(@Param("param") JobScheduleParam param, @Param("start") int start, @Param("limit") int limit);
 
     int count(@Param("param") JobScheduleParam param);
+
+    JobSchedule getByNameGroup(String name, String group);
 }

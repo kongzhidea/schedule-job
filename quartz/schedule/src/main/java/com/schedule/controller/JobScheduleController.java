@@ -181,6 +181,8 @@ public class JobScheduleController {
         } catch (Exception e) {
             return JsonUtil.getJson(1, e.getMessage()).toString();
         }
+        cronExpression = cronExpression.trim();
+        arguments = StringUtils.trim(arguments);
 
         AbstractJobBean abstractJobBean = (AbstractJobBean) ApplicationContextHelper.getBean(jobName);
         if (abstractJobBean == null) {
@@ -193,7 +195,15 @@ public class JobScheduleController {
             if (job == null) {
                 return JsonUtil.getJson(1, "任务不存在").toString();
             }
+            if (!jobName.equals(job.getJobName())) {
+                return JsonUtil.getJson(1, "不允许修改任务名").toString();
+            }
+            if (!jobGroup.equals(job.getJobGroup())) {
+                return JsonUtil.getJson(1, "不允许修改任务组").toString();
+            }
         }
+
+        String oriCron = job.getScheduleTime();
 
         job.setJobName(jobName);
         job.setJobGroup(jobGroup);
@@ -209,7 +219,10 @@ public class JobScheduleController {
 
         try {
             if (id > 0) {
-                updateScheduleJob(job);
+                // 当任务表达式更新后才需要更新 scheduleJob
+                if (!oriCron.equals(cronExpression)) {
+                    updateScheduleJob(job);
+                }
 
                 jobScheduleService.updateJobById(job);
             } else {

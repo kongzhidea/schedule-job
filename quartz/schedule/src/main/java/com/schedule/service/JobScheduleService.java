@@ -29,6 +29,10 @@ public class JobScheduleService {
         return jobScheduleDao.getById(id);
     }
 
+    public JobSchedule getJobByNameGroup(String name, String group) {
+        return jobScheduleDao.getByNameGroup(name, group);
+    }
+
     public void updateJobById(JobSchedule jobSchedule) {
         jobScheduleDao.updateById(jobSchedule);
     }

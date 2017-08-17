@@ -14,6 +14,12 @@
         from job_schedule where id = #{id}
     </select>
 
+    <select id="getByNameGroup"  resultType="JobSchedule">
+        select
+        <include refid="Columns"/>
+        from job_schedule where  job_name=#{0} and job_group = #{1}
+    </select>
+
     <select id="search" resultType="JobSchedule">
         select
         <include refid="Columns"/>

@@ -4,6 +4,7 @@ import com.schedule.conste.JobHistoryStatusEnum;
 import com.schedule.model.JobHistory;
 import com.schedule.model.JobSchedule;
 import com.schedule.service.JobHistoryService;
+import com.schedule.service.JobScheduleService;
 import com.schedule.utils.ApplicationContextHelper;
 import com.schedule.utils.IpUtil;
 import org.quartz.DisallowConcurrentExecution;
@@ -23,6 +24,7 @@ public class QuartzJobFactory implements Job {
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private JobHistoryService jobHistoryService = ApplicationContextHelper.getBean(JobHistoryService.class);
+    private JobScheduleService jobScheduleService = ApplicationContextHelper.getBean(JobScheduleService.class);
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -58,7 +60,14 @@ public class QuartzJobFactory implements Job {
         // 任务运行时参数
         JobContext jobContext = new JobContext();
         jobContext.setHostName(hostName);
+
+        // 重新设置arguments
+        JobSchedule ori = jobScheduleService.getJobByNameGroup(scheduleJob.getJobName(), scheduleJob.getJobGroup());
+        scheduleJob.setArguments(ori.getArguments());
+
         jobContext.setJobSchedule(scheduleJob);
+
+
 
         AbstractJobBean job = (AbstractJobBean) ApplicationContextHelper.getBean(scheduleJob.getJobName());
         job.setJobContext(jobContext);
