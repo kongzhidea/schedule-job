@@ -16,3 +16,5 @@ quartz集成mysql。
 5.QuartzJobFactory： 有状态任务，同一个任务下表示必须等到前一个线程处理完毕后才再启一个新的线程。
 6.quartz_mysql.xml中配置 schedule，指定quartz.properties。  quartz.properties中指定对应的数据库地址。
 ```
+
+#### [补偿执行](http://www.cnblogs.com/skyLogin/p/6927629.html)

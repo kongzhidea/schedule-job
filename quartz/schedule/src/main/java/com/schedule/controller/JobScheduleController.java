@@ -356,6 +356,7 @@ public class JobScheduleController {
         return JsonUtil.getOkJson().toString();
     }
 
+    // 补偿执行 ：http://www.cnblogs.com/skyLogin/p/6927629.html
     private void addScheduleJob(JobSchedule job) throws SchedulerException {
         TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
 
@@ -372,6 +373,7 @@ public class JobScheduleController {
 
             //表达式调度构建器
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getScheduleTime());
+            scheduleBuilder.withMisfireHandlingInstructionDoNothing(); // 取消补偿执行
 
             trigger = TriggerBuilder.newTrigger().withIdentity(job.getJobName(), job.getJobGroup()).withSchedule(scheduleBuilder).build();
 
@@ -391,6 +393,7 @@ public class JobScheduleController {
 
         // Trigger已存在，那么更新相应的定时设置
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getScheduleTime());
+        scheduleBuilder.withMisfireHandlingInstructionDoNothing(); // 取消补偿执行
 
         // 按新的cronExpression表达式重新构建trigger
         trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
