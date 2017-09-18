@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.schedule.dao.JobHistoryDao">
+    <sql id="Columns">
+        id,job_name,job_group,job_status,host_name,ip,start_time,end_time,update_user_id,update_user_name
+    </sql>
+
+    <select id="getById" parameterType="long" resultType="JobHistory">
+        select
+        <include refid="Columns"/>
+        from job_history where id = #{id}
+    </select>
+
+    <select id="search" resultType="JobHistory">
+        select
+        <include refid="Columns"/>
+        from job_history where 1=1
+        <if test="param.jobName != '' and param.jobName != null">
+            and job_name = #{param.jobName}
+        </if>
+        <if test="param.jobGroup != '' and param.jobGroup != null">
+            and job_group = #{param.jobGroup}
+        </if>
+        <if test="param.queryStartTime != '' and param.queryStartTime != null">
+            and start_time  >= #{param.queryStartTime}
+        </if>
+        <if test="param.queryEndTime != '' and param.queryEndTime != null">
+            and start_time &lt;= #{param.queryEndTime}
+        </if>
+        order by id desc limit #{start},#{limit}
+    </select>
+
+    <select id="count" resultType="int">
+        select
+        count(id)
+        from job_history where 1=1
+        <if test="param.jobName != '' and param.jobName != null">
+            and job_name = #{param.jobName}
+        </if>
+        <if test="param.jobGroup != '' and param.jobGroup != null">
+            and job_group = #{param.jobGroup}
+        </if>
+        <if test="param.queryStartTime != '' and param.queryStartTime != null">
+            and start_time  >= #{param.queryStartTime}
+        </if>
+        <if test="param.queryEndTime != '' and param.queryEndTime != null">
+            and start_time &lt;= #{param.queryEndTime}
+        </if>
+    </select>
+
+    <insert id="insert" parameterType="JobHistory" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        job_history( job_name, job_group, job_status, host_name, ip, start_time, end_time, update_user_id, update_user_name)
+        values(#{jobName},#{jobGroup},#{jobStatus},#{hostName},#{ip},#{startTime},#{endTime},#{updateUserId},#{updateUserName})
+    </insert>
+
+    <update id="updateById" parameterType="JobHistory">
+        update job_history set
+        job_name=#{jobName},job_group=#{jobGroup},job_status=#{jobStatus},host_name=#{hostName},ip=#{ip},start_time=#{startTime},end_time=#{endTime},update_user_id=#{updateUserId},update_user_name=#{updateUserName}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteById" parameterType="long">
+        delete from job_history where
+        id=#{id}
+    </delete>
+
+</mapper>
