@@ -3,6 +3,7 @@
 * 集成mysql
 
 
+
 ```
 quartz集成mysql。
 
@@ -18,3 +19,13 @@ quartz集成mysql。
 ```
 
 #### [补偿执行](http://www.cnblogs.com/skyLogin/p/6927629.html)
+
+```
+servlet-api.3.0
+
+下载地址：http://www.java2s.com/Code/Jar/s/Downloadservletapi30jar.htm
+mvn install:install-file -DgroupId=javax.servlet -DartifactId=servlet-api -Dversion=3.0 -Dpackaging=jar -Dfile=servlet-api-3.0.jar
+
+依赖tomcat7中的servlet-api，此工程为provide级别。
+
+```
