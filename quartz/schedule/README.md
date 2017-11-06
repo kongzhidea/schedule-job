@@ -28,4 +28,6 @@ mvn install:install-file -DgroupId=javax.servlet -DartifactId=servlet-api -Dvers
 
 依赖tomcat7中的servlet-api，此工程为provide级别。
 
+一般pom中依赖servlet-api 2.5即可。
+
 ```
