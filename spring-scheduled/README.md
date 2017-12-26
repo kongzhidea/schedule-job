@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
 /**
  * 默认任务为有状态任务。
  *
- * 线上系统需要使用全局锁来方式多个应用启动同一个定时任务的问题。
+ * 线上系统需要使用全局锁来方式解决同一个定时任务在多台线上服务的问题。
  */
 @Component
 public class MyTestService {
