@@ -1,3 +1,5 @@
+### [spring-boot 接入](https://spring.io/guides/gs/scheduling-tasks/)
+### [spring-mvc 接入](http://blog.csdn.net/qq_33556185/article/details/51852537)
 
 ### xml配置
 ```
