@@ -7,7 +7,8 @@ CREATE TABLE `user` (
   `mobile` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
   `mail` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `user` (`id`, `username`, `password`, `realname`, `uptime`, `mobile`, `status`, `mail`) VALUES (1, 'abc', '202cb962ac59075b964b07152d234b70', 'kk', '2016-07-14 19:28:04', '12345678901', 0, 'abc@qq.com');
@@ -43,5 +44,7 @@ CREATE TABLE `job_history` (
   `end_time` datetime DEFAULT NULL COMMENT '任务执行结束时间',
   `update_user_id` int(11) DEFAULT NULL COMMENT '任务维护人',
   `update_user_name` varchar(64) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_start_time` (`start_time`),
+  KEY `idx_job_name_group` (`job_name`,`job_group`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Job执行结果记录表';
