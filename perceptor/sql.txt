@@ -1,0 +1,19 @@
+CREATE TABLE `perceptor_task` (
+  `id` bigint(21) NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `application` varchar(64) NOT NULL COMMENT '所属任务',
+  `job_name` varchar(128) NOT NULL DEFAULT '' COMMENT '任务对应的处理类',
+  `arguments` varchar(2048) DEFAULT NULL COMMENT '运行参数',
+  `description` varchar(150) DEFAULT NULL COMMENT '任务描述',
+  `fire_timestamp` bigint(21) NOT NULL COMMENT '预计执行时间，单位秒',
+  `fire_datetime` datetime NOT NULL COMMENT '预计执行时间，与fire_timestamp对应',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT '任务调度状态，0未执行，1已执行，2已发送',
+  `addtime` datetime DEFAULT NULL COMMENT '创建时间',
+  `uptime` datetime DEFAULT NULL COMMENT '更新时间',
+  `deprecated` int(11) NOT NULL DEFAULT '0' COMMENT '0正常，1删除',
+  PRIMARY KEY (`id`),
+  KEY `idx_app_job` (`application`,`job_name`),
+  KEY `idx_app_addtime` (`application`,`addtime`),
+  KEY `idx_addtime` (`addtime`),
+  KEY `idx_firetime` (`fire_timestamp`),
+  KEY `idx_firedatetime` (`fire_datetime`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Job调度任务表';
