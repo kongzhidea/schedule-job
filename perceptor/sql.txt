@@ -17,5 +17,5 @@ CREATE TABLE `perceptor_task` (
   KEY `idx_addtime` (`addtime`),
   KEY `idx_firetime` (`fire_timestamp`),
   KEY `idx_firedatetime` (`fire_datetime`),
-  KEY `idx_vid` (`vid`),
+  KEY `idx_vid` (`vid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='Job调度任务表';
